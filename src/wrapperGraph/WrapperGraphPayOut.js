@@ -10,8 +10,11 @@ export default function WrapperGraphPayOut({remb,
   coupon,
   ymin,
   xmax,
+  ymax,
   barr_capital,
-  barr_anticipe}) {
+  barr_anticipe, 
+  xrel,
+  airbag}) {
 
   return (
     <View style={styles.container}>
@@ -19,9 +22,12 @@ export default function WrapperGraphPayOut({remb,
         end_under={remb}
         coupon={coupon}
         ymin={ymin}
+        ymax={ymax}
         xmax={xmax}
         barr_capital={barr_capital}
         barr_anticipe={barr_anticipe}
+        xrel={xrel}
+        airbag={airbag}
       />
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={styles.dashedLineRed} />

@@ -1,6 +1,6 @@
 import getRandomInt from './getRandomInt';
 
-export default function generePath(xmax, end_under) {
+export default function generePath(xmax, end_under, xrel) {
 
     var diff = 0.3;
     var tab = [];
@@ -20,7 +20,10 @@ export default function generePath(xmax, end_under) {
         }
     } else {
         
-        let duration = getRandomInt(1,xmax);
+        let duration = xrel;
+        if ( duration === 0 ) {
+            duration = getRandomInt(1,xmax);
+        }
         
         if ( duration == 1 ) {
             tab.push({ x: 0, y: 100 })

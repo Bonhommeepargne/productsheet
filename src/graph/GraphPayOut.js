@@ -7,28 +7,23 @@ import {
 
 import generePath from '../function/generePath';
 import genCoupon from '../function/genCoupon';
+import genAxisX from '../function/genAxisX';
+import genRemb from '../function/genRemb';
 
 import { Dimensions } from "react-native";
 const screenWidth = 0.95 * Dimensions.get("window").width;
 
-function genAxisX(xmax) {
-    let tab = [];
+export default function GraphPayOutAirbag({ end_under, coupon, ymin, ymax, xmax, barr_capital, barr_anticipe, xrel, airbag }) {
 
-    for (let i = 1; i < xmax + 1; i++) {
-        tab.push({ x: i, y: 98, symbol: "triangleUp", size: 1 })
-    }
-
-    return tab;
-}
-
-export default function GraphPayOut({ end_under, coupon, ymin, xmax, barr_capital, barr_anticipe }) {
-
-    let ymax = 130;
-console.log('tot2o')
-    const dataRandom = generePath(xmax, end_under);
+    const dataRandom = generePath(xmax, end_under, xrel);
     const nLastPoint = dataRandom[dataRandom.length-1].x
 
-    const dataBar = genCoupon(dataRandom, coupon, barr_anticipe);
+    const dataBar = genCoupon(dataRandom, coupon, barr_anticipe, airbag, barr_capital);
+    const remboursement = genRemb(end_under, nLastPoint, coupon, barr_anticipe, airbag, barr_capital);
+
+    if ( remboursement.y + 5 > ymax ) { 
+        ymax = Math.round( remboursement.y/10 )*10+10;
+    }
 
     const dataBarrCapital = [
         { x: 0, y: barr_capital },
@@ -206,7 +201,7 @@ console.log('tot2o')
                         data: {
                             fill: "gold",
                             stroke: "gold",
-                            fillOpacity: 0.7,
+                            fillOpacity: 0.85,
                             strokeWidth: 2
                         },
                         labels: {
@@ -217,19 +212,17 @@ console.log('tot2o')
                     }}
                     data={[
                         {
-                            x: nLastPoint, y: (
-                                end_under < barr_capital ? end_under : (end_under > 100 ? 100 + coupon : 100)
-                            ), symbol: "star", size: 5
+                            x: remboursement.x, y: remboursement.y, symbol: "star", size: 5
                         }
                     ]}
                     labels={({ datum }) => (end_under < 100 || nLastPoint > xmax/2 ? "Remboursement final:" + datum.y + "%   " :
                         "    Remboursement final:" + datum.y + "%")}
                     labelComponent={
                         <VictoryLabel
-                            verticalAnchor={() => (end_under < 100 && end_under > barr_capital ? "end" : "middle")}
+                            verticalAnchor={() => ("middle")}
                             textAnchor={() => (end_under < 100 || nLastPoint > xmax / 2 ? "end" : "start")}
-                            dx={() => (end_under < 100 && end_under > barr_capital ? 35 : 0)}
-                            dy={() => (end_under < 100 && end_under > barr_capital ? -13 : 0)}
+                            dx={() => (remboursement.y === 100 ? 35 : 0)}
+                            dy={() => (remboursement.y === 100 ? -20 : 0)}
                         />
                     }
                 />
