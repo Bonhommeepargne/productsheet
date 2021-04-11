@@ -7,29 +7,30 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import WrapperGraphPayOut from './wrapperGraph/WrapperGraphPayOut'
+import WrapperGraphPayOutPhoenix from './wrapperGraph/WrapperGraphPayOutPhoenix'
 import getRandomInt from './function/getRandomInt'
 
 import NegativeScenario from './Scenario/NegativeScenario'
 import PositiveScenario from './Scenario/PositiveScenario'
 import MedianScenario from './Scenario/MedianScenario'
 
-export default function TermSheetAutocallAirbag({
-    coupon,
-    ymin,
-    ymax,
-    xmax,
-    barr_capital,
-    barr_anticipe,
-    airbag,
-    disable
-   }) {
+export default function TermSheetPhoenix({
+  coupon,
+  ymin,
+  ymax,
+  xmax,
+  barr_capital,
+  barr_anticipe,
+  barr_coupon,
+  airbag,
+  disable
+}) {
 
   const [scenarioNegatif, setScenarioNegatif] = useState(getRandomInt(44, 58))
   const [scenarioNeutre, setScenarioNeutre] = useState(getRandomInt(61, 90))
   const [scenarioPositif, setScenarioPositif] = useState(getRandomInt(110, 121))
   const [switchAirbag, setSwitchAirbag] = useState(airbag)
-  
+
   function changeAirbag(value) {
     setSwitchAirbag(value);
     // console.log("airbag Changed to " + value)
@@ -52,8 +53,8 @@ export default function TermSheetAutocallAirbag({
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
           <View style={styles.container}>
-            <Text style={{ fontSize: 30, paddingTop: 5 }}>Autocall Incremental</Text>
-            <Text style={{ fontSize: 26, paddingBottom: 5, fontStyle: 'italic' }}>avec ou sans airbag</Text>
+            <Text style={{ fontSize: 30, paddingTop: 5 }}>Phoenix</Text>
+            {/* <Text style={{ fontSize: 26, paddingBottom: 5, fontStyle: 'italic' }}>avec ou sans airbag</Text> */}
           </View>
           <View style={styles.container}>
             <Text style={{ fontSize: 20, paddingVertical: 5 }}>Illustrations de scénarii de remboursement</Text>
@@ -62,9 +63,9 @@ export default function TermSheetAutocallAirbag({
             au cadre d’investissement.
             </Text>
             <Text style={{ paddingBottom: 15 }}>
-              Exemple avec un produit à maturité {xmax} ans, avec ou sans un mécanisme dit "airbag", une observation annuelle du sous-jacent, un coupon de {coupon}%, une barrière de rappel
-              automatique anticipé de {barr_anticipe}% du niveau initial du sous-jacent, et une barrière de protection (observée à l’échéance) de {barr_capital}%
-              du niveau initial du sous-jacent.
+              Exemple avec un produit à maturité {xmax} ans, une observation annuelle du sous-jacent, un coupon de {coupon}%, une barrière de {
+              barr_coupon}% du niveau initial du sous-jacent, une barrière de rappel automatique anticipé de {barr_anticipe}% du niveau initial du
+              sous-jacent, et une barrière de protection (observée à l’échéance) de {barr_capital}% du niveau initial du sous-jacent.
             </Text>
           </View>
 
@@ -78,11 +79,11 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={0}
-              airbag={airbag}
               rand_func={() => newScenarioNegatif()}
             />
-            <WrapperGraphPayOut
+            <WrapperGraphPayOutPhoenix
               remb={scenarioNegatif}
               coupon={coupon}
               ymin={ymin}
@@ -90,8 +91,8 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={0}
-              airbag={airbag}
             />
           </View>
 
@@ -105,13 +106,11 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={0}
-              airbag={switchAirbag}
               rand_func={() => newScenarioNeutre()}
-              airbag_func={(val) => changeAirbag(val)}
-              disable={disable}
             />
-            <WrapperGraphPayOut
+            <WrapperGraphPayOutPhoenix
               remb={scenarioNeutre}
               coupon={coupon}
               ymin={ymin}
@@ -119,8 +118,8 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={0}
-              airbag={switchAirbag}
             />
           </View>
 
@@ -134,11 +133,11 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={1}
-              airbag={airbag}
               rand_func={() => newScenarioPositif()}
             />
-            <WrapperGraphPayOut
+            <WrapperGraphPayOutPhoenix
               remb={scenarioPositif}
               coupon={coupon}
               ymin={ymin}
@@ -146,8 +145,8 @@ export default function TermSheetAutocallAirbag({
               xmax={xmax}
               barr_capital={barr_capital}
               barr_anticipe={barr_anticipe}
+              barr_coupon={barr_coupon}
               xrel={1}
-              airbag={airbag}
             />
           </View>
 

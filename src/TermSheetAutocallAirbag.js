@@ -5,7 +5,6 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import WrapperGraphPayOut from './wrapperGraph/WrapperGraphPayOut'
 import getRandomInt from './function/getRandomInt'
