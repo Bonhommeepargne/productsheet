@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
     VictoryBar, VictoryChart, VictoryTheme, VictoryLine,
-    VictoryScatter, VictoryLabel, VictoryArea, VictoryAxis, VictoryLegend
+    VictoryScatter, VictoryLabel, VictoryArea, VictoryAxis,
 } from "victory-native";
 
 import generePath from '../function/generePath';

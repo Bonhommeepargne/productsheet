@@ -4,7 +4,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import GraphPayOut from '../graph/GraphPayOut'
+import GraphPayOutPhoenix from '../graph/GraphPayOutPhoenix'
 
 export default function WrapperGraphPayOutPhoenix({remb,
   coupon,
@@ -14,8 +14,8 @@ export default function WrapperGraphPayOutPhoenix({remb,
   barr_capital,
   barr_anticipe,
   barr_coupon,
-  xrel,
-  airbag}) {
+  data,
+  }) {
 
   return (
     <View style={styles.container}>
@@ -28,7 +28,7 @@ export default function WrapperGraphPayOutPhoenix({remb,
         barr_capital={barr_capital}
         barr_anticipe={barr_anticipe}
         barr_coupon={barr_coupon}
-        xrel={xrel}
+        data={data}
       />
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <View style={styles.dashedLineRed} />

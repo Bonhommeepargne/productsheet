@@ -5,25 +5,27 @@ import {
     VictoryScatter, VictoryLabel, VictoryArea, VictoryAxis, VictoryLegend
 } from "victory-native";
 
-import generePath from '../function/generePath';
-import genCoupon from '../function/genCoupon';
 import genAxisX from '../function/genAxisX';
-import genRemb from '../function/genRemb';
 
 import { Dimensions } from "react-native";
 const screenWidth = 0.95 * Dimensions.get("window").width;
 
-export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax, xmax, barr_capital, barr_anticipe, 
-    barr_coupon, xrel }) {
+export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax,
+    xmax, barr_capital, barr_anticipe,
+    barr_coupon, data }) {
 
-    const dataRandom = generePath(xmax, end_under, xrel);
-    const nLastPoint = dataRandom[dataRandom.length-1].x
+    // let dataRandom = [];
+    // for (let i = 0; i < data.xdataRandom.length; i++) {
+    //     dataRandom.push({ x: data.xdataRandom[i], y: data.ydataRandom[i] });
+    // }
 
-    const dataBar = genCoupon(dataRandom, coupon, barr_anticipe, 0, barr_capital);
-    const remboursement = genRemb(end_under, nLastPoint, coupon, barr_anticipe, 0, barr_capital);
-
-    if ( remboursement.y + 5 > ymax ) { 
-        ymax = Math.round( remboursement.y/10 )*10+10;
+    let dataRandom = data.dataRandom;
+    let nLastPoint = data.nLastPoint;
+    let dataBar = data.dataBar;
+    let remboursement = data.remboursement;
+    
+    if (remboursement.y + 5 > ymax) {
+        ymax = Math.round(remboursement.y / 10) * 10 + 10;
     }
 
     const dataBarrCapital = [
@@ -61,7 +63,7 @@ export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax, xmax
                     }}
                     data={dataBar}
                     y0={(d) => 100}
-                    barRatio={1.2}
+                    barRatio={0.6}
                 />
                 <VictoryLine
                     style={{
@@ -226,14 +228,14 @@ export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax, xmax
                             x: remboursement.x, y: remboursement.y, symbol: "star", size: 5
                         }
                     ]}
-                    labels={({ datum }) => (end_under < 100 || nLastPoint > xmax/2 ? "Remboursement final:" + datum.y + "%   " :
+                    labels={({ datum }) => (end_under < 100 || nLastPoint > xmax / 2 ? "Remboursement final:" + datum.y + "%   " :
                         "    Remboursement final:" + datum.y + "%")}
                     labelComponent={
                         <VictoryLabel
                             verticalAnchor={() => ("middle")}
                             textAnchor={() => (end_under < 100 || nLastPoint > xmax / 2 ? "end" : "start")}
-                            dx={() => (remboursement.y === 100 ? 35 : 0)}
-                            dy={() => (remboursement.y === 100 ? -20 : 0)}
+                            dx={() => (remboursement.y >= 100 ? 0 : 0)} // 35 : 0
+                            dy={() => (remboursement.y >= 100 ? 0 : 0)} // -20 : 0
                         />
                     }
                 />

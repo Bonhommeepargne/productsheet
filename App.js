@@ -15,7 +15,7 @@ export default function App() {
       justifyContent: 'flex-start',
       paddingTop: Constants.statusBarHeight,
     }}>
-      <TermSheetAutocallAirbag 
+      {/* <TermSheetAutocallAirbag 
         coupon={5}
         ymin={40}
         ymax={130}
@@ -24,8 +24,8 @@ export default function App() {
         barr_anticipe={100}
         airbag={1}
         disable={false}
-      />
-      {/* <TermSheetPhoenix 
+      /> */}
+      <TermSheetPhoenix 
         coupon={5}
         ymin={40}
         ymax={130}
@@ -33,9 +33,7 @@ export default function App() {
         barr_capital={60}
         barr_coupon={70}
         barr_anticipe={100}
-        airbag={1}
-        disable={false}
-      /> */}
+      />
       <StatusBar style="auto" />
     </View>
   );
