@@ -51,7 +51,7 @@ export default function NegativeScenario(
             </View>
             <View>
                 <Text style={{ fontSize: 16, color: 'midnightblue', fontWeight: 'bold' }}>
-                    L’investisseur reçoit:
+                    L’investisseur reçoit un remboursement partiel de son capital.
             </Text>
             </View>
 
@@ -60,7 +60,7 @@ export default function NegativeScenario(
                 paddingHorizontal: 10, borderRadius: 7, marginVertical: 10
             }}>
                 <Text style={{ fontSize: 15, color: 'gold', fontWeight: 'bold' }}>
-                    ➔ Remboursement {remb}%</Text>
+                    ➔ Remboursement final de {remb}%</Text>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold' }}>
                     Retour sur investissement annualisé {((Math.pow(remb / 100, 1 / xmax) - 1) * 100).toFixed(1)}%</Text>
             </View>

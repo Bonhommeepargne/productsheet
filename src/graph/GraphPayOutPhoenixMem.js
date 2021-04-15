@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import {
     VictoryBar, VictoryChart, VictoryTheme, VictoryLine,
-    VictoryScatter, VictoryLabel, VictoryArea, VictoryAxis, VictoryLegend
+    VictoryScatter, VictoryLabel, VictoryArea, VictoryAxis, VictoryStack
 } from "victory-native";
 
 import genAxisX from '../function/genAxisX';
@@ -10,17 +10,21 @@ import genAxisX from '../function/genAxisX';
 import { Dimensions } from "react-native";
 const screenWidth = 0.95 * Dimensions.get("window").width;
 
-export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax,
+export default function GraphPayOutPhoenixMem({ end_under, coupon, ymin, ymax,
     xmax, barr_capital, barr_anticipe,
     barr_coupon, data }) {
 
     let dataRandom = data.dataRandom;
     let nLastPoint = data.nLastPoint;
-    let dataBar = data.dataBar;
     let remboursement = data.remboursement;
     
+    let dataStack = [];
+    for (var i = 1; i < xmax + 1; i++) {
+        dataStack.push({ x: i, y: 100 });
+    }
+
     if (remboursement.y + 5 > ymax) {
-        ymax = Math.round(remboursement.y / 10) * 10 + 10;
+        ymax = Math.round(remboursement.y / 10) * 10 + 15;
     }
 
     const dataBarrCapital = [
@@ -48,18 +52,57 @@ export default function GraphPayOutPhoenix({ end_under, coupon, ymin, ymax,
                 /> */}
                 <VictoryAxis dependentAxis crossAxis
                 />
-                <VictoryBar
-                    style={{
-                        data: {
-                            fill: "#2c2682",
-                            fillOpacity: 0.7,
-                            // strokeWidth: 3
-                        },
-                    }}
-                    data={dataBar}
-                    y0={(d) => 100}
-                    barRatio={0.6}
-                />
+                <VictoryStack>
+                    <VictoryBar
+                        style={{
+                            data: {
+                                fill: "red",
+                                fillOpacity: 0,
+                            },
+                        }}
+                        data={dataStack}
+                        // y0={(d) => 100}
+                        barRatio={0.6}
+                    />
+                    <VictoryBar
+                        style={{
+                            data: {
+                                fill: "#2c2682",
+                                fillOpacity: 0.7,
+                                // strokeWidth: 3
+                            },
+                        }}
+                        data={data.dataBar.coupon}
+                        // y0={(d) => 100}
+                        barRatio={0.6}
+                    />
+                    <VictoryBar
+                        style={{
+                            data: {
+                                fill: "#FFF",
+                                stroke: "#FD6C9E",
+                                strokeDasharray: "3,3",
+                                fillOpacity: 0.4,
+                                strokeWidth: ({ index, datum }) => ( datum.y > 0  ? 2 : 0),
+                            },
+                        }}
+                        data={data.dataBar.missedCoupon}
+                        // y0={(d) => 100}
+                        barRatio={0.6}
+                    />
+                    <VictoryBar
+                        style={{
+                            data: {
+                                fill: "#2c2682",
+                                fillOpacity: 0.4,
+                                // strokeWidth: 3
+                            },
+                        }}
+                        data={data.dataBar.getBackCoupon}
+                        // y0={(d) => 100}
+                        barRatio={0.6}
+                    />
+                </VictoryStack>
                 <VictoryLine
                     style={{
                         data: { stroke: "darkgrey" },

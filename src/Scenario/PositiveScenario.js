@@ -58,7 +58,7 @@ export default function PositiveScenario(
                 paddingHorizontal: 10, borderRadius: 7, marginVertical: 10
             }}>
                 <Text style={{ fontSize: 15, color: 'gold', fontWeight: 'bold' }}>
-                    ➔ Remboursement {100 + coupon}%</Text>
+                    ➔ Remboursement final de {100 + coupon}%</Text>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold' }}>
                     Retour sur investissement annualisé {coupon}%</Text>
             </View>

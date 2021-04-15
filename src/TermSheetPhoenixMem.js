@@ -7,11 +7,11 @@ import {
   ScrollView,
 } from 'react-native';
 
-import PositiveScenarioGlobPhoenix from './ScenarioGlob/PositiveScenarioGlobPhoenix'
-import NegativeScenarioGlobPhoenix from './ScenarioGlob/NegativeScenarioGlobPhoenix'
-import MedianScenarioGlobPhoenix from './ScenarioGlob/MedianScenarioGlobPhoenix'
+import PositiveScenarioGlobPhoenixMem from './ScenarioGlob/PositiveScenarioGlobPhoenixMem'
+import NegativeScenarioGlobPhoenixMem from './ScenarioGlob/NegativeScenarioGlobPhoenixMem'
+import MedianScenarioGlobPhoenixMem from './ScenarioGlob/MedianScenarioGlobPhoenixMem'
 
-export default function TermSheetPhoenix({
+export default function TermSheetPhoenixMem({
   coupon,
   ymin,
   ymax,
@@ -26,7 +26,7 @@ export default function TermSheetPhoenix({
       <ScrollView style={styles.scrollView}>
         <View style={styles.container}>
           <View style={styles.container}>
-            <Text style={{ fontSize: 30, paddingTop: 5 }}>Phoenix</Text>
+            <Text style={{ fontSize: 30, paddingTop: 5 }}>Phoenix Mémoire</Text>
             {/* <Text style={{ fontSize: 26, paddingBottom: 5, fontStyle: 'italic' }}>avec ou sans airbag</Text> */}
           </View>
           <View style={styles.container}>
@@ -39,10 +39,13 @@ export default function TermSheetPhoenix({
               Exemple avec un produit à maturité {xmax} ans, une observation annuelle du sous-jacent, un coupon de {coupon}%, une barrière de coupon de {
                 barr_coupon}% du niveau initial du sous-jacent, une barrière de rappel automatique anticipé de {barr_anticipe}% du niveau initial du
               sous-jacent, et une barrière de protection (observée à l’échéance) de {barr_capital}% du niveau initial du sous-jacent.
+              </Text>
+            <Text style={{ paddingBottom: 15 }}>
+              Ce produit possède un effet mémoire qui lui permet de récupérer les coupons non versés en cas de dépassement à la hausse de la barrière de coupon.
             </Text>
           </View>
 
-          <NegativeScenarioGlobPhoenix
+          <NegativeScenarioGlobPhoenixMem
             coupon={coupon}
             ymin={ymin}
             ymax={ymax}
@@ -52,7 +55,7 @@ export default function TermSheetPhoenix({
             barr_anticipe={barr_anticipe}
           />
 
-          <MedianScenarioGlobPhoenix
+          <MedianScenarioGlobPhoenixMem
             coupon={coupon}
             ymin={ymin}
             ymax={ymax}
@@ -62,7 +65,7 @@ export default function TermSheetPhoenix({
             barr_anticipe={barr_anticipe}
           />
 
-          <PositiveScenarioGlobPhoenix
+          <PositiveScenarioGlobPhoenixMem
             coupon={coupon}
             ymin={ymin}
             ymax={ymax}

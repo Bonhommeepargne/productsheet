@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Airbag from '../option/Airbag'
 
-export default function MedianScenario({
+export default function MedianScenarioPhoenix({
     remb,
     coupon,
     ymin,
@@ -12,11 +11,51 @@ export default function MedianScenario({
     barr_capital,
     barr_anticipe,
     xrel,
-    airbag,
     rand_func,
-    airbag_func,
-    disable,    
-    }) {
+    data,
+}) {
+
+    function sj_above_coupon() {
+        let coup = data.flux;
+        let ok = [];
+        let nbcoupon = 0;
+        let nbcouponrec = 0 ;
+        let investisseur = '';
+
+        for (let i = 1; i < coup.length; i++) {
+            if (i == coup.length - 1) {
+                if (coup[i] > 100 + coupon) {
+                    ok.push(i);
+                }
+            } else {
+                if (coup[i] >= coupon) {
+                    ok.push(i)
+                    nbcoupon++;
+                    nbcouponrec = nbcouponrec + (coup[i] - coupon) / coupon
+                } 
+            }
+        }
+
+        let message;
+        if (ok.length > 0) {
+            message = 'Aux années ' + ok.join(',') + ', la barrière de coupon est dépassée.';
+            
+            let listCoupon=[]
+            investisseur = "L'investisseur recoit " + nbcoupon + " coupon(s): "
+            ok.forEach((val) => { listCoupon.push(coup[val] + "%"); })
+            investisseur = investisseur + listCoupon.join(',');
+            investisseur = investisseur + " et un remboursement final de " +coup[coup.length -1] + "%. ";
+            investisseur = investisseur + nbcouponrec + " coupons de " + coupon + 
+                "% ont donc pu être récupéré grâce à l'effet mémoire"
+        } else {
+            message = "La barrière de coupon n'est jamais dépassée."
+            investisseur = "L'investisseur recoit uniquement un remboursement final de " +coup[coup.length -1] + "%.";
+        }
+
+        return { message, investisseur };
+    }
+
+    let { message, investisseur } = sj_above_coupon()
 
     return (
         <>
@@ -26,7 +65,6 @@ export default function MedianScenario({
             }}>
                 <Text style={{ fontSize: 20, color: 'midnightblue' }}>Scénario médian:</Text>
             </View>
-            <Airbag airbag={airbag} airbag_func={airbag_func} disable={disable} />
             <View style={{}}>
                 <Text style={{ fontSize: 16, color: 'midnightblue' }}>
                     baisse du sous-jacent de moins de {100 - barr_capital}% à l’échéance des {xmax} ans.
@@ -39,7 +77,7 @@ export default function MedianScenario({
                             Exemple:
                 </Text>
                         <Text style={{ fontSize: 16, color: 'dimgrey' }}>
-                            Perte de {100 - remb}% du sous jacent
+                            Perte de {100 - remb}% du sous jacent.
                 </Text>
                     </View>
                     <View style={{ justifyContent: 'center' }}>
@@ -53,10 +91,11 @@ export default function MedianScenario({
                 </View>
             </View>
             <View>
+                <Text style={{ fontSize: 16, color: 'dimgrey' }}>
+                {message}
+                </Text>
                 <Text style={{ fontSize: 16, color: 'midnightblue', fontWeight: 'bold' }}>
-                    L’investisseur est remboursé 100 % de son capital{airbag > 0 ? 
-                    " + coupon (" + coupon + "%) x maturité du produit (" + xmax + ") x coefficient d'airbag (" + airbag + ")" : ''
-                        }.
+                {investisseur}
             </Text>
             </View>
 
@@ -65,9 +104,9 @@ export default function MedianScenario({
                 paddingHorizontal: 10, borderRadius: 7, marginVertical: 10
             }}>
                 <Text style={{ fontSize: 15, color: 'gold', fontWeight: 'bold' }}>
-                    ➔ Remboursement final de {100 + coupon * xmax * airbag }%</Text>
+                    ➔ Remboursement final de {data.remboursement.y}%</Text>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold' }}>
-                    Retour sur investissement annualisé {((Math.pow((100 + coupon * xmax * airbag) / 100, 1 / xmax) - 1) * 100).toFixed(1)}%</Text>
+                    Retour sur investissement annualisé {(data.tri * 100).toFixed(1)}%</Text>
             </View>
         </>
     )

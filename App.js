@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 // import TermSheetAutocall from './src/TermSheetAutocall';
 import TermSheetAutocallAirbag from './src/TermSheetAutocallAirbag';
 import TermSheetPhoenix from './src/TermSheetPhoenix'
+import TermSheetPhoenixMem from './src/TermSheetPhoenixMem'
 import Constants from 'expo-constants';
 
 export default function App() {
@@ -25,13 +26,13 @@ export default function App() {
         airbag={1}
         disable={false}
       /> */}
-      <TermSheetPhoenix 
+      <TermSheetPhoenixMem
         coupon={5}
         ymin={40}
         ymax={130}
         xmax={10}
         barr_capital={60}
-        barr_coupon={70}
+        barr_coupon={80}
         barr_anticipe={100}
       />
       <StatusBar style="auto" />

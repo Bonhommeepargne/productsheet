@@ -15,7 +15,39 @@ export default function MedianScenarioPhoenix({
     data,
 }) {
 
-    console.log(data);
+    function sj_above_coupon() {
+        let coup = data.flux;
+        let ok = [];
+        let nbcoupon = 0;
+        let investisseur = '';
+
+        for (let i = 1; i < coup.length; i++) {
+            if (i == coup.length - 1) {
+                if (coup[i] == 100 + coupon) {
+                    ok.push(i);
+                }
+            } else {
+                if (coup[i] == coupon) {
+                    ok.push(i)
+                    nbcoupon++;
+                }
+            }
+        }
+
+        let message;
+        if (ok.length > 0) {
+            message = 'Aux années ' + ok.join(',') + ', la barrière de coupon est dépassée.';
+            investisseur = "L'investisseur recoit " + nbcoupon + " coupon(s) de " + 
+                    coupon + "% et un remboursement final de " +coup[coup.length -1] + "%.";
+        } else {
+            message = "La barrière de coupon n'est jamais dépassée."
+            investisseur = "L'investisseur recoit uniquement un remboursement final de " +coup[coup.length -1] + "%.";
+        }
+
+        return { message, investisseur };
+    }
+
+    let { message, investisseur } = sj_above_coupon()
 
     return (
         <>
@@ -37,7 +69,7 @@ export default function MedianScenarioPhoenix({
                             Exemple:
                 </Text>
                         <Text style={{ fontSize: 16, color: 'dimgrey' }}>
-                            Perte de {100 - remb}% du sous jacent
+                            Perte de {100 - remb}% du sous jacent.
                 </Text>
                     </View>
                     <View style={{ justifyContent: 'center' }}>
@@ -51,8 +83,11 @@ export default function MedianScenarioPhoenix({
                 </View>
             </View>
             <View>
+                <Text style={{ fontSize: 16, color: 'dimgrey' }}>
+                {message}
+                </Text>
                 <Text style={{ fontSize: 16, color: 'midnightblue', fontWeight: 'bold' }}>
-                    L’investisseur est re
+                {investisseur}
             </Text>
             </View>
 
@@ -61,9 +96,9 @@ export default function MedianScenarioPhoenix({
                 paddingHorizontal: 10, borderRadius: 7, marginVertical: 10
             }}>
                 <Text style={{ fontSize: 15, color: 'gold', fontWeight: 'bold' }}>
-                    ➔ Remboursement {100 + coupon * xmax}%</Text>
+                    ➔ Remboursement final de {data.remboursement.y}%</Text>
                 <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold' }}>
-                    Retour sur investissement annualisé {((Math.pow((100 + coupon * xmax) / 100, 1 / xmax) - 1) * 100).toFixed(1)}%</Text>
+                    Retour sur investissement annualisé {(data.tri * 100).toFixed(1)}%</Text>
             </View>
         </>
     )
