@@ -26,6 +26,15 @@ export default function App() {
         airbag={1}
         disable={false}
       /> */}
+      {/* <TermSheetPhoenixMem
+        coupon={5}
+        ymin={40}
+        ymax={130}
+        xmax={10}
+        barr_capital={60}
+        barr_coupon={80}
+        barr_anticipe={100}
+      /> */}
       <TermSheetPhoenixMem
         coupon={5}
         ymin={40}
