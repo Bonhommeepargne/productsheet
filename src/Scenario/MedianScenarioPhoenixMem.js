@@ -26,6 +26,7 @@ export default function MedianScenarioPhoenix({
             if (i == coup.length - 1) {
                 if (coup[i] > 100 + coupon) {
                     ok.push(i);
+                    nbcouponrec = nbcouponrec + (coup[i] -100 - coupon) / coupon
                 }
             } else {
                 if (coup[i] >= coupon) {
@@ -42,11 +43,12 @@ export default function MedianScenarioPhoenix({
             
             let listCoupon=[]
             investisseur = "L'investisseur recoit " + nbcoupon + " coupon(s): "
+            ok.pop()
             ok.forEach((val) => { listCoupon.push(coup[val] + "%"); })
             investisseur = investisseur + listCoupon.join(',');
             investisseur = investisseur + " et un remboursement final de " +coup[coup.length -1] + "%. ";
             investisseur = investisseur + nbcouponrec + " coupons de " + coupon + 
-                "% ont donc pu être récupéré grâce à l'effet mémoire"
+                "% ont donc pu être récupéré grâce à l'effet mémoire."
         } else {
             message = "La barrière de coupon n'est jamais dépassée."
             investisseur = "L'investisseur recoit uniquement un remboursement final de " +coup[coup.length -1] + "%.";
